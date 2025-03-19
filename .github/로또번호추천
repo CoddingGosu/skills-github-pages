@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>슬롯머신 로또 번호 추천</title>
+    <style>
+        /* 전체 배경 */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #ff7b7b, #ffd700, #7bff7b, #7bb9ff);
+            background-size: 400% 400%;
+            animation: gradientAnimation 8s ease infinite;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* 전체 콘텐츠 박스 */
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+            width: 100%;
+            max-width: 500px;
+            animation: slideIn 1s ease-out;
+        }
+
+        /* 제목 스타일 */
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            font-family: 'Georgia', serif;
+            color: #ffffff;
+            text-shadow: 2px 2px 5px #ffcc00;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        /* 슬롯머신 스타일 */
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            gap: 15px;
+            position: relative;
+            width: 100%;
+            height: 100px;
+        }
+
+        .slot {
+            width: 80px;
+            height: 80px;
+            background-color: #ffcc00;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #2b2b2b;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
+            position: relative;
+        }
+
+        /* 버튼 스타일 */
+        button {
+            background-color: #ff0077;
+            color: white;
+            font-size: 20px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(255, 0, 119, 0.6);
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #ff0044;
+            box-shadow: 0 0 20px rgba(255, 0, 68, 0.8);
+            transform: translateY(-5px);
+        }
+
+        /* 애니메이션 키프레임 */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes slideIn {
+            0% { transform: translateY(-50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 20px #ffcc00, 0 0 40px #ffcc00; }
+            100% { text-shadow: 0 0 25px #ff0077, 0 0 50px #ff0077; }
+        }
+
+        /* 슬롯 번호 애니메이션 */
+        @keyframes revealNumber {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>슬롯머신 로또 번호 추천</h1>
+        <button onclick="generateLottoNumbers()">로또 번호 생성</button>
+        <div class="slot-machine">
+            <div class="slot" id="slot1">-</div>
+            <div class="slot" id="slot2">-</div>
+            <div class="slot" id="slot3">-</div>
+            <div class="slot" id="slot4">-</div>
+            <div class="slot" id="slot5">-</div>
+            <div class="slot" id="slot6">-</div>
+        </div>
+    </div>
+
+    <script>
+        // 로또 번호 생성 함수
+        function generateLottoNumbers() {
+            const numbers = [];
+            while (numbers.length < 6) {
+                const number = Math.floor(Math.random() * 45) + 1;
+                if (!numbers.includes(number)) {
+                    numbers.push(number);
+                }
+            }
+            numbers.sort((a, b) => a - b); // 번호 오름차순 정렬
+            revealNumbersOneByOne(numbers);
+        }
+
+        // 슬롯 번호 하나씩 나타나게 하기
+        function revealNumbersOneByOne(numbers) {
+            const slots = document.querySelectorAll('.slot');
+            let count = 0;
+
+            // 각 슬롯에 번호를 하나씩 추가하는 애니메이션
+            slots.forEach((slot, index) => {
+                setTimeout(() => {
+                    slot.innerText = numbers[count];
+                    slot.style.animation = 'revealNumber 0.5s ease forwards';
+                    count++;
+                }, 500 * index); // 각 슬롯이 하나씩 0.5초 간격으로 번호를 표시
+            });
+        }
+    </script>
+
+</body>
+</html>
